@@ -19,7 +19,7 @@ namespace desafio
     [HttpPost]
     public ActionResult<String> save([FromBody] MoneyChangeTransactionDTO moneyChangeTransactionDTO)
     {
-      return _moneyChangeTransactionService.Save(moneyChangeTransactionDTO);
+      return Ok(_moneyChangeTransactionService.Save(moneyChangeTransactionDTO));
     }
   }
 }

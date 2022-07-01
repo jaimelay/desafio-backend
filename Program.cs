@@ -4,12 +4,12 @@ global using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<IMoneyChangeTransactionService, MoneyChangeTransactionService>();
+ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
@@ -26,3 +26,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void ConfigureServices(IServiceCollection services)
+{
+  services.AddScoped<IMoneyChangeTransactionRepository, MoneyChangeTransactionRepository>();
+  services.AddTransient<IMoneyChangeTransactionService, MoneyChangeTransactionService>();
+}

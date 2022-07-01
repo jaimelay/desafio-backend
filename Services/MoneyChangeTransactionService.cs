@@ -2,8 +2,23 @@ namespace desafio
 {
   public class MoneyChangeTransactionService : IMoneyChangeTransactionService
   {
+    private readonly IMoneyChangeTransactionRepository _moneyChangeTransactionRepository;
+
+    public MoneyChangeTransactionService(IMoneyChangeTransactionRepository moneyChangeTransactionRepository)
+    {
+      _moneyChangeTransactionRepository = moneyChangeTransactionRepository;
+    }
+
     public String Save(MoneyChangeTransactionDTO moneyChangeTransactionDTO)
     {
+      MoneyChangeTransaction moneyChangeTransaction = new()
+      {
+        Price = moneyChangeTransactionDTO.Price,
+        Paid = moneyChangeTransactionDTO.Paid,
+        MoneyChange = moneyChangeTransactionDTO.MoneyChange,
+        CreatedAt = moneyChangeTransactionDTO.CreatedAt,
+      };
+      _moneyChangeTransactionRepository.Save(moneyChangeTransaction);
       return GetMoneyChange(moneyChangeTransactionDTO);
     }
 
