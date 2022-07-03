@@ -34,6 +34,42 @@ namespace desafio.Tests
     }
 
     [Fact]
+    public void ReturnErrorWhenMoneyChangeIsNegative()
+    {
+      var result = _service.Save(new()
+      {
+        Price = 100,
+        Paid = 50
+      });
+
+      Assert.Equal("Valor pago menor que o preço", result);
+    }
+
+    [Fact]
+    public void ReturnErrorWhenPriceIsNegative()
+    {
+      var result = _service.Save(new()
+      {
+        Price = -100,
+        Paid = 200
+      });
+
+      Assert.Equal("O preço deve ser maior ou igual a 0", result);
+    }
+
+    [Fact]
+    public void ReturnErrorWhenPaidIsNegative()
+    {
+      var result = _service.Save(new()
+      {
+        Price = 100,
+        Paid = -50
+      });
+
+      Assert.Equal("Valor pago menor que o preço", result);
+    }
+
+    [Fact]
     public void GetChangeMoneyReturnsCorrectBillsAndCoins() { }
 
     private MoneyChangeTransactionDTO CreateRandomMoneyChangeTransactionDTO()

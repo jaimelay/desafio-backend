@@ -11,6 +11,24 @@ namespace desafio
 
     public String Save(MoneyChangeTransactionDTO moneyChangeTransactionDTO)
     {
+      if (moneyChangeTransactionDTO.MoneyChange < 0.0m)
+      {
+        return "Valor pago menor que o preço";
+        // throw new Exception();
+      }
+
+      if (moneyChangeTransactionDTO.Price < 0.0m)
+      {
+        return "O preço deve ser maior ou igual a 0";
+        // throw new Exception();
+      }
+
+      if (moneyChangeTransactionDTO.Paid <= 0.0m)
+      {
+        return "O valor pago deve ser maior que 0";
+        // throw new Exception();
+      }
+
       MoneyChangeTransaction moneyChangeTransaction = new()
       {
         Price = moneyChangeTransactionDTO.Price,
@@ -34,11 +52,6 @@ namespace desafio
         0.05m,
         0.01m,
       };
-
-      if (moneyChangeTransactionDTO.MoneyChange < 0.0m)
-      {
-        throw new Exception("");
-      }
 
       return MoneyUtil.GetMoneyChangeTotalAndInBillsAndCentsToString(moneyChangeTransactionDTO.MoneyChange, allowedBillsAndCents);
     }

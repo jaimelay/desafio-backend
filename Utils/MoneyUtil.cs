@@ -36,7 +36,14 @@ namespace desafio
       {
         int quantityBillsOrCents = moneyChangeBillsAndCents[i].Item1;
         decimal billsOrCents = moneyChangeBillsAndCents[i].Item2;
-        moneyChangeInBillsAndCentsToString += quantityBillsOrCents == 1 ? (quantityBillsOrCents.ToString() + " nota de ") : (quantityBillsOrCents.ToString() + " notas de ");
+        if (billsOrCents < 1.0m)
+        {
+          moneyChangeInBillsAndCentsToString += quantityBillsOrCents == 1 ? (quantityBillsOrCents.ToString() + " moeda de ") : (quantityBillsOrCents.ToString() + " moedas de ");
+        }
+        else
+        {
+          moneyChangeInBillsAndCentsToString += quantityBillsOrCents == 1 ? (quantityBillsOrCents.ToString() + " nota de ") : (quantityBillsOrCents.ToString() + " notas de ");
+        }
         moneyChangeInBillsAndCentsToString += billsOrCents.ToString("C", new CultureInfo("pt-BR", false).NumberFormat) + "\n";
       }
 
