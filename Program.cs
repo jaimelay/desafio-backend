@@ -25,6 +25,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var serviceScope = app.Services.CreateScope())
+{
+  var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+  context.Database.EnsureCreated();
+}
+
 app.Run();
 
 void ConfigureServices(IServiceCollection services)

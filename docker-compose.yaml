@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   postgres:
-    container_name: postgres-14
+    container_name: postgres
     image: postgis/postgis:14-3.2-alpine
     shm_size: 2gb
     ports:
@@ -13,3 +13,24 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
+    networks:
+      - desafio-network
+    restart: on-failure
+
+  desafio:
+    container_name: desafio
+    image: desafio
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5091:5091
+    depends_on:
+      - postgres
+    networks:
+      - desafio-network
+    restart: on-failure
+
+networks:
+  desafio-network:
+    driver: bridge
